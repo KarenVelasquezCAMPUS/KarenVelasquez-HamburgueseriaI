@@ -1,5 +1,6 @@
 using Api.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using Persistencia;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureCors();
+//builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 
 builder.Services.AddDbContext<ApiContext>(options =>
 {

@@ -6,42 +6,43 @@ using Persistencia;
 namespace Aplicacion.UnitOfWork;
 public class UnitOfWork : IUnitOfWork, IDisposable
 {
-    private readonly ApiContext context;
-    
-    private CategoriaRepository _categorias;
-    private ChefRepository _chefs;
-    //private HamburguesaIngredienteRepository _hamburguesaIngredientes;
-    private HamburguesaRepository _hamburguesas;
-    private IngredienteRepository _ingredientes;
+    private readonly ApiContext _context;
+    CategoriaRepository _categoria;
+    ChefRepository _chef;
+    //HamburguesaIngredienteRepository _hamburguesaIngrediente;
+    HamburguesaRepository _hamburguesa;
+    IngredienteRepository _ingrediente;
 
-    public UnitOfWork (ApiContext _context)
+    public UnitOfWork (ApiContext context)
     {
-        context = _context;
+        _context = context;
     }
 
-    public ICategoria Categorias 
+    public ICategoriaRepository Categorias 
     {
-        get{
-            if(_categorias == null)
+        get
+        {
+            if(_categoria is not null)
             {
-                _categorias = new CategoriaRepository(context);
+                return (ICategoriaRepository)_categoria;
             }
-            return _categorias;
-            }
+            return (ICategoriaRepository)(_categoria = new CategoriaRepository(_context));
+        }
     }
 
-    public IChef Chefs
+    public IChefRepository Chefs
     {
-        get{
-            if(_chefs == null)
+        get
+        {
+            if(_chef is not null)
             {
-                _chefs = new ChefRepository(context);
+                return (IChefRepository)_chef;
             }
-            return _chefs;
+            return (IChefRepository)(_chef = new ChefRepository(_context));
             }
     }
 
-    /* public IHamburguesaIngrediente HamburguesaIngredientes
+    /* public IHamburguesaIngredienteRepository HamburguesaIngredientes
     {
         get{
             if(_hamburguesaIngredientes == null)
@@ -52,30 +53,37 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             }
     } */
 
-    public IHamburguesa Hamburguesas
+    public IHamburguesaRepository Hamburguesas
     {
-        get{
-            if(_hamburguesas == null)
+        get
+        {
+            if (_hamburguesa is not null)
             {
-                _hamburguesas = new HamburguesaRepository(context);
+                return (IHamburguesaRepository)_hamburguesa;
             }
-            return _hamburguesas;
-            }
+            return (IHamburguesaRepository)(_hamburguesa = new HamburguesaRepository(_context));
+        }
     }
 
-    public IIngrediente Ingredientes
+    public IIngredienteRepository Ingredientes
     {
-        get{
-            if(_ingredientes == null)
+        get
+        {
+            if (_ingrediente is not null)
             {
-                _ingredientes = new IngredienteRepository(context);
+                return (IIngredienteRepository)_ingrediente;
             }
-            return _ingredientes;
-            }
+            return (IIngredienteRepository)(_ingrediente = new IngredienteRepository(_context));
+        }
     }
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
+    }
+
+    public async Task<int> SaveAsync()
+    {
+        return await _context.SaveChangesAsync();
     }
 }

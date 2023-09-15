@@ -4,7 +4,7 @@ using Persistencia;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aplicacion.Repository;
-public class HamburguesaRepository : GenericRepository<Hamburguesa>, IHamburguesa
+public class HamburguesaRepository : GenericRepository<Hamburguesa>, IHamburguesaRepository
 {
     private readonly ApiContext _context;
 

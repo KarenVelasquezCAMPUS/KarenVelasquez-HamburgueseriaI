@@ -4,7 +4,7 @@ using Persistencia;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aplicacion.Repository;
-public class ChefRepository : GenericRepository<Chef>, IChef
+public class ChefRepository : GenericRepository<Chef>, IChefRepository
 {
     private readonly ApiContext _context;
 

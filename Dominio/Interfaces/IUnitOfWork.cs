@@ -1,11 +1,11 @@
-using Dominio.Entities;
-
 namespace Dominio.Interfaces;
-public class IUnitOfWork
+public interface IUnitOfWork
 {
-    ICategoria Categorias { get; }
-    IChef Chefs { get; }
-    IHamburguesa Hamburguesas { get; }
-    HamburguesaIngrediente HamburguesaIngredientes { get; }
-    IIngrediente Ingredientes { get; }
+    ICategoriaRepository Categorias { get; }
+    IChefRepository Chefs { get; }
+    IHamburguesaRepository Hamburguesas { get; }
+    //IHamburguesaIngredienteRepository HamburguesaIngredientes { get; }
+    IIngredienteRepository Ingredientes { get; }
+
+    Task<int> SaveAsync();
 }
