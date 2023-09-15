@@ -1,5 +1,5 @@
 namespace Dominio.Entities;
-public class HamburguesaIngrediente
+public class HamburguesaIngrediente : BaseEntity
 {
     public string HamburguesaFk { get; set; }
     public Hamburguesa Hamburguesa { get; set; }
