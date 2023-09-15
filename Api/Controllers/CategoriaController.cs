@@ -1,6 +1,4 @@
-//using API.Dtos;
-//using API.Helpers;
-//using AutoMapper;
+using Api.Dto;
 using Dominio.Entities;
 using Dominio.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,7 +12,7 @@ public class CategoriaController : BaseApiController
 {
     private readonly IUnitOfWork _unitOfWork;
 
-    public CategoriaController(IUnitOfWork unitOfWork) //,IMapper mapper)
+    public CategoriaController(IUnitOfWork unitOfWork)//, IMapper mapper)
     {
         this._unitOfWork = unitOfWork;
         //_mapper = mapper;
@@ -77,7 +75,7 @@ public class CategoriaController : BaseApiController
             return BadRequest();
         }        
         return CreatedAtAction(nameof(Post),new {id = categoria.Id}, categoriaDto);
-    } */
+    }  */
 
     // [PUT]
     [HttpPut("{id}")]
