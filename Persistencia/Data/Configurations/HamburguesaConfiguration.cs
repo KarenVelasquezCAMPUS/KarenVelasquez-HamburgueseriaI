@@ -8,7 +8,7 @@ namespace Persistencia.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Hamburguesa> builder)
         {
-            builder.ToTable("Hamburguesa");
+            builder.ToTable("hamburguesa");
 
             builder.HasKey(p => p.Id);
 
@@ -16,37 +16,34 @@ namespace Persistencia.Data.Configurations
             .IsRequired();
 
             builder.Property(p => p.Nombre)
-           .IsRequired()
-           .HasMaxLength(50);
+            .IsRequired()
+            .HasMaxLength(100);
 
-           builder.Property(p => p.Precio)
-           .IsRequired()
-           .HasMaxLength(30);
-
-           builder.HasOne(p => p.Categoria)
-           .WithMany(p => p.Hamburguesas)
-           .HasForeignKey(p => p.CategoriaFk);
-
-            builder.HasOne(p => p.Chef)
-            .WithMany(p => p.Hamburguesas)
-            .HasForeignKey(p => p.ChefFk);
+            builder.Property(p => p.Precio)
+            .IsRequired()
+            .HasMaxLength(30);
 
             builder
-            .HasMany(p => p.Ingredientes)
-            .WithMany(p => p.Hamburguesas)
+            .HasMany(m => m.Ingredientes)
+            .WithMany(m => m.Hamburguesas)
             .UsingEntity<HamburguesaIngrediente>(
-            j => j
-            .HasOne(pt => pt.Ingrediente)
-            .WithMany(t => t.HamburguesaIngrediente)
-            .HasForeignKey(pt => pt.IngredienteId),
-            j => j
-            .HasOne(pt => pt.Hamburguesa)
-            .WithMany(t => t.HamburguesaIngredientes)
-            .HasForeignKey(pt => pt.HamburguesaId),
-            j => 
-            {
-                j.HasKey(t => new {t.HamburguesaId, t.IngredienteId});
-            });
+
+                j => j
+                .HasOne(o => o.Ingrediente)
+                .WithMany(o => o.HamburguesaIngredientes)
+                .HasForeignKey(fk => fk.IngredienteFk),
+
+                j => j
+                .HasOne(em => em.Hamburguesa)
+                .WithMany(e => e.HamburguesaIngredientes)
+                .HasForeignKey(em => em.HamburguesaFk),
+
+                j =>
+                {
+                    j.ToTable("hamburguesaIngrediente");
+                    j.HasKey(t => new{t.HamburguesaFk, t.IngredienteFk});
+                }
+            );
         }
     }
 }

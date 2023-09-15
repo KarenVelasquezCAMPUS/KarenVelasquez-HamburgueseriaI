@@ -9,7 +9,7 @@ namespace Persistencia.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
-            builder.ToTable("Categoria");
+            builder.ToTable("categoria");
 
             builder.HasKey(p => p.Id);
 

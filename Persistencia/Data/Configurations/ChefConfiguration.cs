@@ -12,7 +12,7 @@ namespace Persistencia.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Chef> builder)
         {
-            builder.ToTable("Chef");
+            builder.ToTable("chef");
 
             builder.HasKey(p => p.Id);
 
